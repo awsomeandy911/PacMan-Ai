@@ -87,13 +87,13 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***" 
-
+     # util.raiseNotDefined()
     """
     Every node remembers the path represented by directions
-    For example, ([10, 10], ['South', 'North', 'West', 'East', ...]
+    For example, ([9, 9], ['South', 'North', 'West', 'East', ...]
     """
     fringe = util.Stack()
-    # start location, like [7, 7]
+    # start location, like [9, 9]
     startLocation = problem.getStartState()
     # (location, path)
     startNode = (startLocation, [])
@@ -112,13 +112,14 @@ def depthFirstSearch(problem: SearchProblem):
                 continue
             fringe.push((item[0], node[1] + [item[1]]))
     util.raiseNotDefined()
+    
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     # util.raiseNotDefined()
     fringe = util.Queue()
-    # Just location, like [7, 7]
+    # Start location, like [9, 9]
     startLocation = problem.getStartState()
     # (location, path)
     startNode = (startLocation, [])
@@ -142,8 +143,9 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    # util.raiseNotDefined()
     fringe = util.PriorityQueue()
-    # Just location, like [7, 7]
+    # Start location, like [9, 9]
     startLocation = problem.getStartState()
     # (location, path, cost)
     startNode = (startLocation, [], 0)
@@ -173,8 +175,9 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+     # util.raiseNotDefined()
     fringe = util.PriorityQueue()
-    # Just location, like [7, 7]
+    # Start location, like [9, 9]
     startLocation = problem.getStartState()
     # (location, path, cost)
     startNode = (startLocation, [], 0)
