@@ -1,1 +1,43 @@
 Insert your group number, members, and answers to the supplemental question of the project 1 here!
+Group 36: Andy Le, Victor Pham
+
+QS1.1 (0.25 Pts): What data structure do you use for implementing DFS? Why?
+Answer: We used Stack as our data structure for implementing Depth First Search because using stack allows us to apply the idea of backtracking. Backtracking in Depth First Search is when the algorithm starts at the root node of a tree and goes as far as it can down a given branch, then backtracks until it finds an unexplored path, and then explores it.
+
+QS1.2 (0.25 Pts):The Pacman board will show an overlay of the states explored, and the order in which they were explored (brighter red means earlier exploration). 
+Is the exploration order what you would have expected? Does Pacman actually go to all the explored squares on his way to the goal?
+Answer: The exploration order is what we would’ve expected with the algorithm. When observing the movement of Pacman on Depth First Search we saw that it did not explore all the squares on his way to the goal. This is from the fact that the search algorithm prefers to find the goal in a faster way than optimally.
+
+QS2.1 (0.25 Pts): What data structure do you use for implementing BFS? Why?
+Answer: We used queue as our data structure for implementing Breadth First Search. This is because queue allows the search algorithm to start at a tree’s root or graph and searches all the nodes at the current depth level before moving on to the nodes at the next depth level
+
+QS3.1 (0.25 Pts): What cost function did you implement?  Please briefly describe how your cost function is designed 
+(what factors does it consider and how heavy of a weight has each factor considered been given?)
+Answer: The cost function we decided to implement was the uniform cost function. The uniform cost function we designed prioritizes nodes based on their total cost, exploring the cheapest nodes first before proceeding to more costly ones. It takes into account both the cost of reaching a node and the cost of moving through nodes.
+
+QS4.1 (0.75 Pts): What is the difference between the nullHeuristic and the Manhattan distance heuristic? 
+Does nullHeuristic give the optimal solution?  Why is the Manhattan distance heuristic better?
+Answer:  The null heuristic always returns a cost estimate of zero from the current state to the nearest goal, making it a simple but ineffective method. In contrast, the Manhattan distance takes into account the actual distance between two points, providing a more accurate cost estimate. Therefore, the Manhattan distance is a better heuristic as it gives a closer approximation of the actual cost of reaching the goal.
+
+QS4.2 (0.25 Pts): What happens on openMaze for the various search strategies?
+Answer: Depth First Search - When observing on openMaze we saw that this search algorithm looked for the quickest path available instead of the more optimal path. Even though it expands less nodes, the quickest path our PacMan took while using Depth First Search ended up being the longer one.
+Breadth First Search - When observing on openMaze we saw that this search algorithm reached the goal more quicker than Depth First Search. Since Breadth First Search looks through every depth level it was able to find the quickest path to reach the goal.
+Uniform Cost Search - When observing on openMaze we saw that this search algorithm acted similar to Breadth First Search. Uniform Cost looks for the path that costs the least amount, so it was able to find the quickest path to reach the goal.
+A* Search - When observing on openMaze we saw that this search algorithm was also quicker than Depth First Search. A* Search also accounts for the total cost from the initial to goal node, so it was able to find the quickest path to reach the goal as well.
+
+
+QS5.1 (0.25 Pts): What states representation do you choose in this problem?
+Answer: Our selected state representation includes both the position of Pac-Man (x & y) and an array ([ ]) indicating which corner nodes have been visited.
+
+QS5.2 (0.25 Pts): Briefly explain your implementation
+Answer: For our implementation …
+
+QS6.1 (0.5 Pts): What heuristic did you use for this corner problem?  
+Explain the potential strong points and weak points of your chosen heuristic.  Is your heuristic consistent?  Why?
+Answer: The heuristic we chose for the corner problem was …
+
+QS7.1 (0.5 Pts): What heuristic did you use for this problem?  Explain the potential strong points and weak points of your chosen heuristic.  Is your heuristic consistent?  Why?
+Answer:  The heuristic we chose for the Eating All The Dots problem was…
+
+QS8.1 (0.5 Pts): Describe your solution and explain the potential strong points and weak points of your solution.
+Answer: Our solution for the Suboptimal Search problem was …
