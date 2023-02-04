@@ -1,29 +1,45 @@
 Insert your group number, members, and answers to the supplemental question of the project 1 here!
-Andy Le, Victor Pham
+Group 36: Andy Le, Victor Pham
+
 QS1.1 (0.25 Pts): What data structure do you use for implementing DFS? Why?
-Answer: We used Stack as our data structure for implementing DFS because
+Answer: We used Stack as our data structure for implementing Depth First Search because using stack allows us to apply the idea of backtracking. Backtracking in Depth First Search is when the algorithm starts at the root node of a tree and goes as far as it can down a given branch, then backtracks until it finds an unexplored path, and then explores it.
 
 QS1.2 (0.25 Pts):The Pacman board will show an overlay of the states explored, and the order in which they were explored (brighter red means earlier exploration). 
 Is the exploration order what you would have expected? Does Pacman actually go to all the explored squares on his way to the goal?
+Answer: The exploration order is what we would’ve expected with the algorithm. When observing the movement of Pacman on Depth First Search we saw that it did not explore all the squares on his way to the goal. This is from the fact that the search algorithm prefers to find the goal in a faster way than optimally.
 
 QS2.1 (0.25 Pts): What data structure do you use for implementing BFS? Why?
+Answer: We used queue as our data structure for implementing Breadth First Search. This is because queue allows the search algorithm to start at a tree’s root or graph and searches all the nodes at the current depth level before moving on to the nodes at the next depth level
 
 QS3.1 (0.25 Pts): What cost function did you implement?  Please briefly describe how your cost function is designed 
 (what factors does it consider and how heavy of a weight has each factor considered been given?)
+Answer: The cost function we decided to implement was the uniform cost function. The uniform cost function we designed prioritizes nodes based on their total cost, exploring the cheapest nodes first before proceeding to more costly ones. It takes into account both the cost of reaching a node and the cost of moving through nodes.
 
-QS4.1 (0.75 Pts): What is the difference between the nullHeuristic  and the Manhattan distance heuristic? 
+QS4.1 (0.75 Pts): What is the difference between the nullHeuristic and the Manhattan distance heuristic? 
 Does nullHeuristic give the optimal solution?  Why is the Manhattan distance heuristic better?
+Answer:  The null heuristic always returns a cost estimate of zero from the current state to the nearest goal, making it a simple but ineffective method. In contrast, the Manhattan distance takes into account the actual distance between two points, providing a more accurate cost estimate. Therefore, the Manhattan distance is a better heuristic as it gives a closer approximation of the actual cost of reaching the goal.
 
 QS4.2 (0.25 Pts): What happens on openMaze for the various search strategies?
+Answer: Depth First Search - When observing on openMaze we saw that this search algorithm looked for the quickest path available instead of the more optimal path. Even though it expands less nodes, the quickest path our PacMan took while using Depth First Search ended up being the longer one.
+Breadth First Search - When observing on openMaze we saw that this search algorithm reached the goal more quicker than Depth First Search. Since Breadth First Search looks through every depth level it was able to find the quickest path to reach the goal.
+Uniform Cost Search - When observing on openMaze we saw that this search algorithm acted similar to Breadth First Search. Uniform Cost looks for the path that costs the least amount, so it was able to find the quickest path to reach the goal.
+A* Search - When observing on openMaze we saw that this search algorithm was also quicker than Depth First Search. A* Search also accounts for the total cost from the initial to goal node, so it was able to find the quickest path to reach the goal as well.
 
 QS5.1 (0.25 Pts): What states representation do you choose in this problem?
+Answer: Our selected state representation includes both the position of Pacman (x & y) and an array indicating which corner nodes have been visited.
 
-QS5.2 (0.25 Pts): Briefly  explain your implementation
+QS5.2 (0.25 Pts): Briefly explain your implementation
+Answer: For our implementation on the corners problem we set our goal-state check so that when Pacman traveled all corners, the array would equal 4. This is an indicator that all corners have been visited. As for our get successors function, it calculates potential next states for each direction that can be taken. If the position is not a wall, it checks if it has not visited a corner yet and updates the array of visited corners accordingly. Finally, all possible successors, whether they are corners or not, are added to an array and returned when the function is called.
 
 QS6.1 (0.5 Pts): What heuristic did you use for this corner problem?  
 Explain the potential strong points and weak points of your chosen heuristic.  Is your heuristic consistent?  Why?
+Answer: The heuristic we chose for the corner problem involves Pacman visiting the closest corners it can find first using the Manhattan distance, repeating the process until all unvisited corners are reached. The starting state determines the first closest corner, which is added to the total sum and becomes Pacman's new position. This process repeats until all unvisited corners are visited. The strengths of our heuristic is that it is a straightforward algorithm, is admissible, and consistent. The strengths of using the Manhattan distance ensures that Pacman's movement is limited only to its grid space. However, our heuristic does have weaknesses as well, such as not accounting for the walls of the maze, and it also becomes less efficient for larger problems with more corners. 
 
 QS7.1 (0.5 Pts): What heuristic did you use for this problem?  Explain the potential strong points and weak points of your chosen heuristic.  Is your heuristic consistent?  Why?
-Our UCS agent finds the optimal solution in about 13 seconds, exploring over 16,000 nodes.
+Answer:  The heuristic we chose for the Eating All The Dots problem involves calculating distances with the search algorithm, Breadth First Search. It takes into account the food grid, walls, and starting position of Pacman, then calculates the path to the farthest food piece using Breadth First Search. The estimate is equal to or less than the cost of finding all food. This heuristic uses the mazeDistance function, which calculates distances and takes into account the game state (including walls). A strength of our heuristic is that it provides a close estimate to the true cost of finding all food, while also considering walls. However there are weaknesses, as it takes longer to run since the Breadth First Search is executed for each food piece in the maze. This heuristic is consistent due to our use of the Breadth First Search algorithm.
 
 QS8.1 (0.5 Pts): Describe your solution and explain the potential strong points and weak points of your solution.
+Answer: Our solution for the problem involved finding the goal state in the AnyFoodSearchProblem. The goal is to reach a state that contains any food using the self.food attribute. The findPathToClosestDot function uses the A* search algorithm from search.py to find the path. The A* search uses a priority queue to store our state representation (position, actions array, and total cost + heuristic). The priority value of the state is the total cost + heuristic, which ensures that the node with the least estimated cost is expanded first. Once the goal state is reached, the function returns the list of actions.
+
+
+
