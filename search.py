@@ -86,84 +86,79 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***" 
-     # util.raiseNotDefined()
-    """
-    Every node remembers the path represented by directions
-    For example, ([9, 9], ['South', 'North', 'West', 'East', ...]
-    """
-    fringe = util.Stack()
-    # start location, like [9, 9]
-    startLocation = problem.getStartState()
-    # (location, path)
-    startNode = (startLocation, [])
-    fringe.push(startNode)
-    visitedLocation = set()
+    "*** YOUR CODE HERE ***"
 
-    while not fringe.isEmpty():
-        # node[0] is the location, while node[1] is the path
-        node = fringe.pop()
-        visitedLocation.add(node[0])
-        if problem.isGoalState(node[0]):
-            return node[1]
-        successors = problem.getSuccessors(node[0])
-        for item in successors:
-            if item[0] in visitedLocation:
-                continue
-            fringe.push((item[0], node[1] + [item[1]]))
-    util.raiseNotDefined()
+   
+    fringe = util.Stack()
+    startPosition = problem.getStartState()
+    visited = []
+    path = []
+    startNode = (startPosition, path)
+    fringe.push(startNode) # adds the first node (starting node) to the fringe
     
+    while not fringe.isEmpty():
+        node = fringe.pop()
+        visited.append(node[0])
+        if problem.isGoalState(node[0]): # sees if the current node is the goal (we do this first in case )
+            return node[1]
+        for child in problem.getSuccessors(node[0]):
+            if child[0] in visited:
+                continue
+            fringe.push((child[0], node[1] + [child[1]]))
+   
+
+    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    # util.raiseNotDefined()
+
     fringe = util.Queue()
-    # Start location, like [9, 9]
-    startLocation = problem.getStartState()
-    # (location, path)
-    startNode = (startLocation, [])
-    fringe.push(startNode)
-    visitedLocation = set()
-    visitedLocation.add(startLocation)
+    startPosition = problem.getStartState()
+    visited = []
+    path = []
+    startNode = (startPosition, path)
+    fringe.push(startNode) # adds the first node (starting node) to the fringe
+    visited.append(startPosition)
 
     while not fringe.isEmpty():
-        # node[0] is location, while node[1] is path
         node = fringe.pop()
+        
         if problem.isGoalState(node[0]):
             return node[1]
-        successors = problem.getSuccessors(node[0])
-        for item in successors:
-            if item[0] in visitedLocation:
+        for child in problem.getSuccessors(node[0]):
+            if child[0] in visited:
                 continue
-            visitedLocation.add(item[0])
-            fringe.push((item[0], node[1] + [item[1]]))
-    util.raiseNotDefined()
+            visited.append(child[0])
+            fringe.push((child[0], node[1] + [child[1]]))
+
+
+    #util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    # util.raiseNotDefined()
+
     fringe = util.PriorityQueue()
-    # Start location, like [9, 9]
-    startLocation = problem.getStartState()
-    # (location, path, cost)
-    startNode = (startLocation, [], 0)
+    startPosition = problem.getStartState()
+    visited = []
+    path = []
+    cost = 0
+    startNode = (startPosition, path, cost)
     fringe.push(startNode, 0)
-    visitedLocation = set()
 
     while not fringe.isEmpty():
-        # node[0] is location, while node[1] is path, while node[2] is cumulative cost
         node = fringe.pop()
         if problem.isGoalState(node[0]):
             return node[1]
-        if node[0] not in visitedLocation:
-            visitedLocation.add(node[0])
-            for successor in problem.getSuccessors(node[0]):
-                if successor[0] not in visitedLocation:
-                    cost = node[2] + successor[2]
-                    fringe.push((successor[0], node[1] + [successor[1]], cost), cost)
-    util.raiseNotDefined()
+        if node[0] not in visited:
+            visited.append(node[0])
+            for child in problem.getSuccessors(node[0]):
+                if child[0] not in visited:
+                    cost = child[2] + node[2]
+                    fringe.push((child[0], node[1] + [child[1]], child[2] + node[2]), cost)
+
+    #util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
@@ -175,29 +170,27 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-     # util.raiseNotDefined()
+
     fringe = util.PriorityQueue()
-    # Start location, like [9, 9]
-    startLocation = problem.getStartState()
-    # (location, path, cost)
-    startNode = (startLocation, [], 0)
+    startPosition = problem.getStartState()
+    visited = []
+    path = []
+    cost = 0
+    startNode = (startPosition, path, cost)
     fringe.push(startNode, 0)
-    visitedLocation = set()
 
     while not fringe.isEmpty():
-        # node[0] is location, while node[1] is path, while node[2] is cumulative cost
         node = fringe.pop()
         if problem.isGoalState(node[0]):
             return node[1]
-        if node[0] not in visitedLocation:
-            visitedLocation.add(node[0])
-            for successor in problem.getSuccessors(node[0]):
-                if successor[0] not in visitedLocation:
-                    cost = node[2] + successor[2]
-                    totalCost = cost + heuristic(successor[0], problem)
-                    fringe.push((successor[0], node[1] + [successor[1]], cost), totalCost)
-     
-    util.raiseNotDefined()
+        if node[0] not in visited:
+            visited.append(node[0])
+            for child in problem.getSuccessors(node[0]):
+                if child[0] not in visited:
+                    cost = child[2] + node[2]
+                    fringe.push((child[0], node[1] + [child[1]], child[2] + node[2]), cost + (heuristic(child[0], problem)))
+
+    #util.raiseNotDefined()
 
 
 # Abbreviations
