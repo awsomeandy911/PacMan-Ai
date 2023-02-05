@@ -89,22 +89,23 @@ def depthFirstSearch(problem: SearchProblem):
     "*** YOUR CODE HERE ***"
 
    
-    fringe = util.Stack()
-    startPosition = problem.getStartState()
-    visited = []
-    path = []
-    startNode = (startPosition, path)
+    fringe = util.Stack() # initialize stack to frontier (stack preferred for DFS)
+    startPosition = problem.getStartState() 
+    visited = [] # initialize array for nodes visited
+    path = [] # initialize path (action)
+    startNode = (startPosition, path) # assigning startPosition and path as the starting node
     fringe.push(startNode) # adds the first node (starting node) to the fringe
     
-    while not fringe.isEmpty():
-        node = fringe.pop()
-        visited.append(node[0])
-        if problem.isGoalState(node[0]): # sees if the current node is the goal (we do this first in case )
-            return node[1]
-        for child in problem.getSuccessors(node[0]):
-            if child[0] in visited:
+    # enter loop
+    while not fringe.isEmpty(): 
+        node = fringe.pop() # node contains the position and path
+        visited.append(node[0]) # the node is visited and the position is appended to the visited array
+        if problem.isGoalState(node[0]): # sees if the current node position is the goal (we do this first in case )
+            return node[1] # if the node position is the goal, return the path of node
+        for child in problem.getSuccessors(node[0]): # enter loop if we have not reached goal
+            if child[0] in visited: # we look at the children nodes and if the location has already been visited, we skip
                 continue
-            fringe.push((child[0], node[1] + [child[1]]))
+            fringe.push((child[0], node[1] + [child[1]])) # otherwise, we add the location of the child and the path of parent and child to the stack
    
 
     #util.raiseNotDefined()
@@ -113,24 +114,24 @@ def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    fringe = util.Queue()
+    fringe = util.Queue() # initializes queue to frontier (queue preferred for BFS)
     startPosition = problem.getStartState()
-    visited = []
-    path = []
-    startNode = (startPosition, path)
+    visited = [] # initialize array for nodes visited
+    path = [] # initialize path (action)
+    startNode = (startPosition, path)  # assigning startPosition and path as the starting node
     fringe.push(startNode) # adds the first node (starting node) to the fringe
-    visited.append(startPosition)
+    visited.append(startPosition) # we add the starting position to the visited array
 
-    while not fringe.isEmpty():
-        node = fringe.pop()
-        
-        if problem.isGoalState(node[0]):
-            return node[1]
-        for child in problem.getSuccessors(node[0]):
-            if child[0] in visited:
+    # enter loop
+    while not fringe.isEmpty(): 
+        node = fringe.pop() # node contains the position and path
+        if problem.isGoalState(node[0]): # sees if the current node position is the goal
+            return node[1] # if the node position is the goal, return the path of node
+        for child in problem.getSuccessors(node[0]): # enter loop if we have not reached goal
+            if child[0] in visited: # we look at the children nodes and if the location has already been visited, we skip
                 continue
-            visited.append(child[0])
-            fringe.push((child[0], node[1] + [child[1]]))
+            visited.append(child[0]) # unlike DFS, we will add the child node's location regardless
+            fringe.push((child[0], node[1] + [child[1]])) # otherwise, we add the location of the child and the path of the parent and child to the queue
 
 
     #util.raiseNotDefined()
@@ -139,23 +140,23 @@ def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
 
-    fringe = util.PriorityQueue()
-    startPosition = problem.getStartState()
-    visited = []
-    path = []
-    cost = 0
-    startNode = (startPosition, path, cost)
-    fringe.push(startNode, 0)
+    fringe = util.PriorityQueue() # initialize priorityqueue to frontier
+    startPosition = problem.getStartState() 
+    visited = [] # initialize array for nodes visited 
+    path = [] # initialize path (action)
+    cost = 0 # initialize cost
+    startNode = (startPosition, path, cost) # assigning startPosition, path, and cost to the starting node
+    fringe.push(startNode, 0) 
 
     while not fringe.isEmpty():
-        node = fringe.pop()
-        if problem.isGoalState(node[0]):
-            return node[1]
-        if node[0] not in visited:
-            visited.append(node[0])
-            for child in problem.getSuccessors(node[0]):
-                if child[0] not in visited:
-                    cost = child[2] + node[2]
+        node = fringe.pop() # node contains the position, path, and cost
+        if problem.isGoalState(node[0]): # sees if the current node position is the goal
+            return node[1] # if the node position is the goal, return the path of node
+        if node[0] not in visited: # if the position of the node is not in array
+            visited.append(node[0]) # we add the position of the node to the array
+            for child in problem.getSuccessors(node[0]): # we look at the children nodes
+                if child[0] not in visited: # if the position of the child node is not in the visited array,
+                    cost = child[2] + node[2] # we add the cost of the child node and the parent node
                     fringe.push((child[0], node[1] + [child[1]], child[2] + node[2]), cost)
 
     #util.raiseNotDefined()
@@ -170,25 +171,26 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-
-    fringe = util.PriorityQueue()
-    startPosition = problem.getStartState()
-    visited = []
-    path = []
-    cost = 0
-    startNode = (startPosition, path, cost)
-    fringe.push(startNode, 0)
+    
+    fringe = util.PriorityQueue() # initialize priorityqueue to frontier
+    startPosition = problem.getStartState() 
+    visited = [] # initialize array for nodes visited 
+    path = [] # initialize path (action)
+    cost = 0 # initialize cost
+    startNode = (startPosition, path, cost) # assigning startPosition, path, and cost to the starting node
+    fringe.push(startNode, 0) 
 
     while not fringe.isEmpty():
-        node = fringe.pop()
-        if problem.isGoalState(node[0]):
-            return node[1]
-        if node[0] not in visited:
-            visited.append(node[0])
-            for child in problem.getSuccessors(node[0]):
-                if child[0] not in visited:
-                    cost = child[2] + node[2]
+        node = fringe.pop() # node contains the position, path, and cost
+        if problem.isGoalState(node[0]): # sees if the current node position is the goal
+            return node[1] # if the node position is the goal, return the path of node
+        if node[0] not in visited: # if the position of the node is not in array
+            visited.append(node[0]) # we add the position of the node to the array
+            for child in problem.getSuccessors(node[0]): # we look at the children nodes
+                if child[0] not in visited: # if the position of the child node is not in the visited array,
+                    cost = child[2] + node[2] # we add the cost of the child node and the parent node
                     fringe.push((child[0], node[1] + [child[1]], child[2] + node[2]), cost + (heuristic(child[0], problem)))
+                    # very similar to the uniformcostsearch function, b
 
     #util.raiseNotDefined()
 

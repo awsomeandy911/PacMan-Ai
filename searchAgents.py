@@ -292,6 +292,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        self.startingGameState = startingGameState
 
     def getStartState(self):
         """
@@ -299,14 +300,18 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        corners = [] # initialize array of corners
+        return (self.startingPosition, (corners))
+        #util.raiseNotDefined()
 
     def isGoalState(self, state: Any):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        maxLengthGoal = (len(state[1]) == 4) # When we reach all four corners, we have achieved goal
+        return maxLengthGoal
+        #util.raiseNotDefined()
 
     def getSuccessors(self, state: Any):
         """
@@ -329,6 +334,21 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            x, y = state[0]
+            dx, dy = Actions.directionToVector(action) # direction change
+            nextx, nexty = int(x + dx), int(y + dy) 
+            nextPos = (nextx, nexty) # next position
+            wallsReached = self.walls[nextx][nexty] # position of walls
+
+
+            if not wallsReached: # if walls have not been reached
+                cornersReached = state[1][:] 
+                if nextPos not in cornersReached: # next position is not in array of reached corners
+                    if nextPos in self.corners: # next position is a corner
+                        cornersReached.append(nextPos) # add the next position to corners reached array
+                successor = (nextPos, cornersReached)
+                successors.append(((successor), action, 1))
+
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -364,6 +384,7 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+    
     return 0 # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
@@ -458,6 +479,23 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    foods = foodGrid.asList() # adds list of positions on grid into food
+    if not foods:
+        return 0
+    maxDistance = 0
+    for item in foods: # for every food item in foods
+        temp = position + item # in this case, temp is the key that holds position and item
+        if temp in problem.heuristicInfo: # looks for temp key in dictionary
+            tempDistance = problem.heuristicInfo[temp] # assign the distance of the position and item to tempDistance
+        else:
+            tempDistance = mazeDistance(position, item, problem.startingGameState) # using mazeDistance (function that allows for finding distance between places in maze)
+            problem.heuristicInfo[temp] = tempDistance
+        
+        if maxDistance < tempDistance:
+            maxDistance = tempDistance
+
+    return maxDistance
+
     return 0
 
 class ClosestDotSearchAgent(SearchAgent):
@@ -489,7 +527,10 @@ class ClosestDotSearchAgent(SearchAgent):
         problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        return search.ucs(problem) # using uniformcostsearch here
+
+        #util.raiseNotDefined()
 
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
@@ -525,6 +566,8 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         x,y = state
 
         "*** YOUR CODE HERE ***"
+        listFood = self.food.asList()
+        return state in listFood
         util.raiseNotDefined()
 
 def mazeDistance(point1: Tuple[int, int], point2: Tuple[int, int], gameState: pacman.GameState) -> int:
