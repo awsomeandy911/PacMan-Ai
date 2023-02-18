@@ -277,6 +277,9 @@ def betterEvaluationFunction(currentGameState):
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
     evaluation function (question 5).
     DESCRIPTION: <write something here so we know what you did>
+    Our better evaluation function calculates a score based on the distance to the nearest food pellet
+    and the current game score. It prioritizes closer food pellets and higher scores, and returns the resulting
+    More can be found in P2_answers_supplemental
     """
     "*** YOUR CODE HERE ***"
     pacmanPosition = currentGameState.getPacmanPosition() # gets Pacman's current position and a list of all remaining food pellet positions
