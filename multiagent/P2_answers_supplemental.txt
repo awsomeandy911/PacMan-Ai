@@ -1,1 +1,23 @@
 Please Enter your team's full names and your answers to QS questions here!
+Group 36: Andy Le & Victor Pham
+
+QS1.1: Explain the implementation of ReflexAgent in multiAgents.py and how you improved it.
+Answer: In our implementation of ReflexAgent in multiAgents.py 
+
+QS1.2: What is your value function and why do you think this estimation makes sense?
+Answer:
+
+QS2.1: Explain your algorithm. Why do you think it is working?
+Answer: In our Minimax algorithm, our agent recursively searches through the game tree, exploring possible sequences of moves and estimating the outcome of each sequence using maximizer and minimizer functions. We implemented two functions, maxValue and minValue. maxValue is our maximizer function that Pacman uses to select the best action to take given a state, while minValue is our minimizer function that each ghost uses to select the best action to take given the current state. Lastly, the getAction function returns the action that resulted in the highest utility value found by the minValue function.
+
+QS 3.1: The AlphaBetaAgent minimax values should be identical to the MinimaxAgent minimax values. Explain why.
+Answer: The AlphaBetaAgent minimax values should be identical to the MinimaxAgent minimax values because they both use the same minimax algorithm. Both the MiniMax and Alpha-Beta search algorithms will produce the same optimal moves and scores for the agents, but the main difference is the Alpha-Beta algorithm is more efficient in terms of the number of nodes it needs to explore, which can result in faster computation times.
+
+QS 3.2: Explain your strategy for breaking a tie.
+Answer: While we don’t have any explicit strategy for breaking a tie in our algorithm, the maxValue function we implemented deals with breaking ties. In the function, the direction variable is set to the first legal action when the search depth is zero, and is updated to the action with the highest evaluation score when a new maximum value is found. However, if there are multiple actions with the same max value (i.e tie), the direction will not be updated and will remain as the first action in the legal actions list. Thus, our Pacman can break ties by simply choosing the first legal action that has the maximum value.
+
+QS 4.1: Explain your Expectimax algorithm
+Answer: In our Expectimax algorithm, our agent recursively searches through the game tree, exploring possible sequences of moves and estimating the outcome of each sequence using our evaluation function. At each node, it assumes that ghost players will make random moves with equal probability and selects moves that will maximize the expected outcome. We implemented two functions, maxValue and expValue. maxValue returns the maximum score for a state after generating all the legal successor states, while the expValue function returns the expected value of the game state after the ghosts have taken their turn. Lastly, the getAction function uses maxValue and expValue to determine the most optimal move for our Pacman agent based on the expected outcomes of all the possible moves.
+
+Q5.1: Explain your new evaluation function, why do you think this new evaluation function is better compared to the previous one?
+Answer: In our new betterEvaluationFunction, the function calculates a score for the current game state to help our Pacman decide which actions to take. It starts by finding Pacman's position and a list of all remaining food pellets. If there are no food pellets left, the function returns the current score. Otherwise, it calculates the distance from our Pacman to the nearest food pellet and uses this distance as a measure of how desirable the current state is. The closer the food, the more desirable it is. The function then combines this measure of desirability with the current score to create a final evaluation score. Our Pacman will use this score to choose which action to take. Our new evaluation function is more effective because it places a higher emphasis on finding food, while the previous only factored in proximity to food and danger from ghosts.
