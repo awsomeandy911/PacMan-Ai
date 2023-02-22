@@ -2,10 +2,10 @@ Please Enter your team's full names and your answers to QS questions here!
 Group 36: Andy Le & Victor Pham
 
 QS1.1: Explain the implementation of ReflexAgent in multiAgents.py and how you improved it.
-Answer: In our implementation of ReflexAgent in multiAgents.py 
+Answer: The implementation of the ReflexAgent class in multiagents.py relies on the evaluation function within it. What it normally does is that it returns a score based on the current and proposed successor game states. The function extracts information from the state, information like remaining food and pacman position. To improve on this, we needed to update the evaluation function by having a decrease in score whenever the pacman is essentially in the same position as a ghost, decrease in score depending on position and food which encourages the pacman to search for food.
 
 QS1.2: What is your value function and why do you think this estimation makes sense?
-Answer:
+Answer: The estimation makes sense for the value function because it allows for encouragement of actions that would result in a good score. It also discourages actions that allow for decrease in score. As a result, it allows for good decision making on the pacman and gives a good estimation of value.
 
 QS2.1: Explain your algorithm. Why do you think it is working?
 Answer: In our Minimax algorithm, our agent recursively searches through the game tree, exploring possible sequences of moves and estimating the outcome of each sequence using maximizer and minimizer functions. We implemented two functions, maxValue and minValue. maxValue is our maximizer function that Pacman uses to select the best action to take given a state, while minValue is our minimizer function that each ghost uses to select the best action to take given the current state. Lastly, the getAction function returns the action that resulted in the highest utility value found by the minValue function.
